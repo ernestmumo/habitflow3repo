@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import '../controllers/habits_controller.dart';
+import '../models/habit_model.dart';
+import '../models/habit_category.dart';
 
 class HabitsScreen extends StatelessWidget {
   final HabitsController controller = Get.put(HabitsController());
 
-  HabitsScreen({Key? key}) : super(key: key);
+  HabitsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +16,12 @@ class HabitsScreen extends StatelessWidget {
     final deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Column(
           children: [
             _buildHeaderAndSearch(deviceHeight, deviceWidth),
-            _buildFilterOptions(deviceHeight, deviceWidth),
+            _buildFilterOptions(deviceHeight, deviceWidth, context),
             Expanded(
               child: _buildHabitsList(deviceHeight, deviceWidth),
             ),
@@ -143,7 +145,7 @@ class HabitsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFilterOptions(double deviceHeight, double deviceWidth) {
+  Widget _buildFilterOptions(double deviceHeight, double deviceWidth,BuildContext context) {
     return Container(
       height: 50,
       margin: EdgeInsets.only(top: 16),
@@ -153,6 +155,7 @@ class HabitsScreen extends StatelessWidget {
         children: [
           // All filter
           _buildFilterChip(
+            context,
             label: 'All',
             isSelected: controller.filterType.value == 'All',
             onTap: () => controller.setFilterType('All'),
@@ -160,6 +163,7 @@ class HabitsScreen extends StatelessWidget {
           ),
           // Category filters
           ...controller.categories.map((category) => _buildFilterChip(
+            context,
             label: category.name,
             isSelected: controller.filterType.value == category.name,
             onTap: () => controller.setFilterType(category.name),
@@ -171,7 +175,7 @@ class HabitsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFilterChip({
+  Widget _buildFilterChip(BuildContext context,{
     required String label,
     required bool isSelected,
     required VoidCallback onTap,
@@ -184,7 +188,7 @@ class HabitsScreen extends StatelessWidget {
         margin: EdgeInsets.only(right: 10),
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? (color ?? Colors.blue.shade600) : Colors.white,
+          color: isSelected ? (color ?? Colors.blue.shade600) : Theme.of(context).colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isSelected ? Colors.transparent : Colors.grey.shade300,
@@ -209,7 +213,7 @@ class HabitsScreen extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: isSelected ? Colors.white : Colors.black87,
+                color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurface,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               ),
             ),
@@ -369,7 +373,7 @@ class HabitsScreen extends StatelessWidget {
                                             : null,
                                         color: habit.isDone.value
                                             ? Colors.grey
-                                            : Colors.black87,
+                                            : Theme.of(Get.context!).colorScheme.onSurface,
                                       ),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,

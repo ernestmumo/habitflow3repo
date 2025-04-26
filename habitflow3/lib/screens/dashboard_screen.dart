@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 class DashboardScreen extends StatelessWidget {
   final DashboardController controller = Get.put(DashboardController());
 
-  DashboardScreen({Key? key}) : super(key: key);
+  DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class DashboardScreen extends StatelessWidget {
     final deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: RefreshIndicator(
         onRefresh: () async {
           controller.refreshDashboard();
@@ -68,7 +68,7 @@ class DashboardScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.blue.withOpacity(0.3),
+            color: Colors.blue.withValues(alpha: 0.3),
             blurRadius: 10,
             offset: Offset(0, 4),
           ),
@@ -95,7 +95,7 @@ class DashboardScreen extends StatelessWidget {
                 Text(
                   DateFormat('EEEE, MMMM d').format(DateTime.now()),
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withValues(alpha: 0.8),
                     fontSize: 14,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -109,7 +109,7 @@ class DashboardScreen extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8), // Reduced horizontal padding
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
@@ -127,7 +127,7 @@ class DashboardScreen extends StatelessWidget {
                   Text(
                     '${controller.completionRate.toStringAsFixed(0)}% complete',
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha:0.9),
                       fontSize: 11, // Slightly smaller font size
                     ),
                     textAlign: TextAlign.center,
@@ -233,7 +233,7 @@ class DashboardScreen extends StatelessWidget {
                                 : null,
                             color: habit.isDone.value
                                 ? Colors.grey
-                                : Colors.black87,
+                                : Theme.of(Get.context!).colorScheme.onSurface,
                           ),
                         ),
                         subtitle: Text(
@@ -339,7 +339,7 @@ class DashboardScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: Theme.of(Get.context!).colorScheme.onSurface,
           ),
         ),
         SizedBox(height: 4),
@@ -383,7 +383,7 @@ class DashboardScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16),
-            Container(
+            SizedBox(
               height: 180,
               child: _buildBarChart(),
             ),

@@ -2,35 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:math' as math;
 
-class Achievement {
-  final String id;
-  final String title;
-  final String description;
-  final IconData icon;
-  final DateTime earnedAt;
-
-  Achievement({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.icon,
-    required this.earnedAt,
-  });
-}
-
-class ActivityLog {
-  final String id;
-  final String description;
-  final DateTime timestamp;
-  final IconData icon;
-
-  ActivityLog({
-    required this.id,
-    required this.description,
-    required this.timestamp,
-    required this.icon,
-  });
-}
+import '../models/activity_log.dart';
+import '../models/achievements.dart';
 
 class ProfileController extends GetxController {
   final RxString name = 'User Name'.obs;
