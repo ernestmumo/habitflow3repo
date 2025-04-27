@@ -4,25 +4,9 @@ import 'package:table_calendar/table_calendar.dart';
 import 'dart:math' as math;
 import 'package:intl/intl.dart';
 
-class HabitRecord {
-  final String id;
-  final String habitId;
-  final String habitName;
-  final String category;
-  final Color categoryColor;
-  final DateTime date;
-  final bool completed;
+import '../models/habit_record.dart';
 
-  HabitRecord({
-    required this.id,
-    required this.habitId,
-    required this.habitName,
-    required this.category,
-    required this.categoryColor,
-    required this.date,
-    required this.completed,
-  });
-}
+
 
 class CalendarController extends GetxController {
   final Rx<DateTime> focusedDay = DateTime.now().obs;

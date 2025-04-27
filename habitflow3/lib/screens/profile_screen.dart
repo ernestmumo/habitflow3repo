@@ -15,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
     final deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
@@ -29,10 +29,10 @@ class ProfileScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _buildProfileHeader(deviceHeight, deviceWidth),
-                _buildStatsSection(deviceHeight, deviceWidth),
-                _buildAchievements(deviceHeight, deviceWidth),
-                _buildActivityFeed(deviceHeight, deviceWidth),
-                _buildSettings(deviceHeight, deviceWidth),
+                _buildStatsSection(deviceHeight, deviceWidth, context),
+                _buildAchievements(deviceHeight, deviceWidth, context),
+                _buildActivityFeed(deviceHeight, deviceWidth,context),
+                _buildSettings(deviceHeight, deviceWidth, context),
                 // Add bottom padding to ensure we don't overflow
                 SizedBox(height: deviceHeight * 0.05),
               ],
@@ -45,7 +45,8 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _buildProfileHeader(double deviceHeight, double deviceWidth) {
     return Obx(() => Container(
-          height: deviceHeight * 0.25,
+          height: deviceHeight * 0.30,
+          width: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [Colors.blue.shade800, Colors.blue.shade500],
@@ -149,7 +150,7 @@ class ProfileScreen extends StatelessWidget {
         ));
   }
 
-  Widget _buildStatsSection(double deviceHeight, double deviceWidth) {
+  Widget _buildStatsSection(double deviceHeight, double deviceWidth,BuildContext context) {
     return Obx(() => Padding(
           padding: EdgeInsets.all(16),
           child: Column(
@@ -167,7 +168,7 @@ class ProfileScreen extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(vertical: 16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surfaceContainer,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
@@ -180,19 +181,19 @@ class ProfileScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildStatItem(
+                    _buildStatItem(context,
                       icon: Icons.checklist,
                       iconColor: Colors.blue.shade600,
                       value: controller.totalHabits.value.toString(),
                       label: 'Total Habits',
                     ),
-                    _buildStatItem(
+                    _buildStatItem(context,
                       icon: Icons.local_fire_department,
                       iconColor: Colors.orange,
                       value: controller.currentStreak.value.toString(),
                       label: 'Current Streak',
                     ),
-                    _buildStatItem(
+                    _buildStatItem(context,
                       icon: Icons.emoji_events,
                       iconColor: Colors.amber,
                       value: controller.longestStreak.value.toString(),
@@ -206,7 +207,7 @@ class ProfileScreen extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surfaceContainer,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
@@ -250,7 +251,7 @@ class ProfileScreen extends StatelessWidget {
                     SizedBox(height: 16),
                     Container(
                       height: 150,
-                      child: _buildActivityChart(),
+                      child: _buildActivityChart(context),
                     ),
                   ],
                 ),
@@ -260,12 +261,13 @@ class ProfileScreen extends StatelessWidget {
         ));
   }
 
-  Widget _buildActivityChart() {
+  Widget _buildActivityChart(BuildContext context) {
     final weekData = controller.getWeeklyActivityData();
     final weekDayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
     return BarChart(
       BarChartData(
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
         alignment: BarChartAlignment.spaceAround,
         maxY: 10,
         barTouchData: BarTouchData(
@@ -350,7 +352,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatItem({
+  Widget _buildStatItem(BuildContext context,{
     required IconData icon,
     required Color iconColor,
     required String value,
@@ -376,7 +378,7 @@ class ProfileScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         SizedBox(height: 4),
@@ -391,7 +393,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAchievements(double deviceHeight, double deviceWidth) {
+  Widget _buildAchievements(double deviceHeight, double deviceWidth,BuildContext context) {
     return Obx(() => Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(
@@ -443,7 +445,7 @@ class ProfileScreen extends StatelessWidget {
                             margin: EdgeInsets.only(right: 12),
                             padding: EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.surfaceContainer,
                               borderRadius: BorderRadius.circular(16),
                               boxShadow: [
                                 BoxShadow(
@@ -491,7 +493,7 @@ class ProfileScreen extends StatelessWidget {
         ));
   }
 
-  Widget _buildActivityFeed(double deviceHeight, double deviceWidth) {
+  Widget _buildActivityFeed(double deviceHeight, double deviceWidth,BuildContext context) {
     return Obx(() => Padding(
           padding: EdgeInsets.all(16),
           child: Column(
@@ -520,7 +522,7 @@ class ProfileScreen extends StatelessWidget {
                     )
                   : Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surfaceContainer,
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
@@ -571,7 +573,7 @@ class ProfileScreen extends StatelessWidget {
         ));
   }
 
-  Widget _buildSettings(double deviceHeight, double deviceWidth) {
+  Widget _buildSettings(double deviceHeight, double deviceWidth, BuildContext context) {
     return Obx(() => Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(
@@ -588,7 +590,7 @@ class ProfileScreen extends StatelessWidget {
               SizedBox(height: 16),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surfaceContainer,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(

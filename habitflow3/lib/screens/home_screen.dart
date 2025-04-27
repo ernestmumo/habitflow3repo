@@ -9,12 +9,13 @@ import 'profile_screen.dart';
 class HomeScreen extends StatelessWidget {
   final NavigationController navigationController = Get.put(NavigationController());
 
-  HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Obx(() {
         switch (navigationController.selectedIndex.value) {
           case 0:
@@ -33,7 +34,7 @@ class HomeScreen extends StatelessWidget {
         currentIndex: navigationController.selectedIndex.value,
         onTap: navigationController.changePage,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
         selectedItemColor: Colors.blue.shade600,
         unselectedItemColor: Colors.grey.shade600,
         selectedLabelStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
